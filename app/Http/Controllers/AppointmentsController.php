@@ -59,7 +59,7 @@ class AppointmentsController extends Controller
 
         //  todo    Validation Check in
         $request->validate([
-            'appointment_date' => 'required|unique:appointments',
+            'appointment_date' => 'required|unique:sessions',
             'doctor_id'        => 'required',
         ]);
 
@@ -125,6 +125,10 @@ class AppointmentsController extends Controller
           'total_fee'               => 'required',
           'paid_amount'             => 'required',
     ]);
+
+      if ($request['paid_amount'] != ['total_fee']) {
+      		redirect()->back()->with('message','paid_amount must be Equal');
+      }
 
         //  ?   Insert Database
         $appointment = Appointment::create([
